@@ -1,213 +1,549 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accessible Investment Calculator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-        
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f0f0f0;
-            font-size: 18px;
-        }
-       .calculator-container {
-            background: #ffffff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-        }
-       .slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 12px;
-            border-radius: 6px;
-            background: #d7dcdf;
-            outline: none;
-            opacity: 0.7;
-            transition: opacity.2s;
-        }
-       .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #005a9c;
-            cursor: pointer;
-        }
-       .slider::-moz-range-thumb {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #005a9c;
-            cursor: pointer;
-        }
-        input[type="number"] {
-            font-size: 1.1rem;
-            padding: 0.75rem;
-        }
-       .result-box {
-            background-color: #e6e6e6;
-            border: 2px solid #005a9c;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="CallCare is custom software built for your team's workflow. Keep your data in Google Sheets where you control it, while your staff gets professional call management tools." />
+  <title>CallCare — Custom Call Management Software That Uses Your Google Sheet</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    html { scroll-behavior: smooth; }
+    .hero-gradient-text {
+      background: linear-gradient(45deg, #2563eb, #0d9488);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .btn { 
+      display: inline-block;
+      text-align: center;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn:hover { transform: scale(1.05); }
+    .btn-primary { 
+      background-color: #2563eb;
+      color: white;
+      box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
+    }
+    .btn-primary:hover { background-color: #1d4ed8; }
+    .btn-secondary { 
+      background-color: white;
+      border: 2px solid #d1d5db;
+      color: #1e293b;
+    }
+    .btn-secondary:hover { 
+      border-color: #2563eb;
+      color: #2563eb;
+    }
+    .feature-icon { 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 3rem;
+      width: 3rem;
+      border-radius: 0.75rem;
+    }
+  </style>
 </head>
-<body class="min-h-screen p-4 md:p-8 flex items-center justify-center">
-    <div class="calculator-container max-w-5xl w-full mx-auto rounded-xl overflow-hidden">
-        <div class="p-6 md:p-10">
-            <h1 class="text-4xl font-bold mb-10 text-center text-gray-800">Accessible Investment Calculator</h1>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Header -->
+  <header class="fixed top-0 w-full bg-white/90 backdrop-blur z-50 border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="#" class="font-bold text-2xl flex items-center gap-2 text-gray-900">
+          <svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25c0-1.372-.465-2.637-1.244-3.626.28-.598.428-1.261.428-1.957 0-2.664-2.336-4.917-5.25-4.917-1.372 0-2.637.465-3.626 1.244a7.5 7.5 0 00-1.957-.428C7.336 9.75 5.25 12.086 5.25 15c0 .696.148 1.359.428 1.957C4.465 17.613 4 18.878 4 20.25A2.25 2.25 0 006.25 22.5h2.25c8.284 0 15-6.716 15-15V6.75A2.25 2.25 0 0021.25 4.5h-19A2.25 2.25 0 000 6.75z" />
+          </svg>
+          CallCare
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
+          <a href="#solutions" class="hover:text-blue-600 transition-colors">Solutions</a>
+          <a href="#how-it-works" class="hover:text-blue-600 transition-colors">How It Works</a>
+          <a href="#pricing" class="hover:text-blue-600 transition-colors">Pricing</a>
+        </nav>
+        <a href="#get-started" class="btn btn-primary">See Your Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-blue-50 via-white to-gray-50">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+        <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-600 text-sm font-semibold px-4 py-2 rounded-full border border-blue-200 mb-6">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+          Custom Software Built for Your Workflow
+        </div>
+        
+        <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900">
+          Professional Call Management.<br> 
+          <span class="hero-gradient-text">Your Data Stays Yours.</span>
+        </h1>
+        
+        <p class="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-gray-600 leading-relaxed">
+          CallCare is <strong>custom software built specifically for your team</strong>. Your data stays in your Google Sheet where you control it completely, while your staff gets professional call management tools that actually work.
+        </p>
+        
+        <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+          <a href="#get-started" class="btn btn-primary text-lg px-8 py-4">Get Your Custom Demo</a>
+          <a href="#how-it-works" class="btn btn-secondary text-lg px-8 py-4">See How It Works</a>
+        </div>
+
+        <!-- Key Differentiator Callout -->
+        <div class="mt-12 max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-600">
+          <div class="flex items-start gap-4">
+            <div class="feature-icon bg-blue-100 text-blue-600 flex-shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+            </div>
+            <div class="text-left">
+              <h3 class="text-lg font-bold text-gray-900">Not Another SaaS Platform</h3>
+              <p class="text-gray-600 mt-1">This isn't a Google Sheets add-on or template. It's professional software that uses your spreadsheet as its database. You get enterprise-level functionality while keeping complete control of your data.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-16">
+          <img src="https://i.imgur.com/8QexgQB.png" alt="CallCare professional interface showing patient call management dashboard" class="rounded-xl shadow-2xl shadow-gray-900/20 ring-1 ring-gray-200 mx-auto max-w-5xl">
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Benefits -->
+    <section class="py-16 md:py-24 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Why CallCare is Different</h2>
+          <p class="mt-4 text-xl text-gray-600">Most software locks your data away. We give you professional tools while keeping your data accessible.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center p-6">
+            <div class="feature-icon bg-green-100 text-green-600 mx-auto mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">You Own Your Data</h3>
+            <p class="text-gray-600">Your data stays in your Google Sheet. Export it, back it up, analyze it however you want. No vendor lock-in, ever.</p>
+          </div>
+          
+          <div class="text-center p-6">
+            <div class="feature-icon bg-blue-100 text-blue-600 mx-auto mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Built for Your Process</h3>
+            <p class="text-gray-600">Custom software designed around your exact workflow. Not a one-size-fits-all solution that forces you to adapt.</p>
+          </div>
+          
+          <div class="text-center p-6">
+            <div class="feature-icon bg-purple-100 text-purple-600 mx-auto mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">No Learning Curve</h3>
+            <p class="text-gray-600">Your managers still have their spreadsheet. Your staff gets an intuitive interface. Everyone's happy.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solutions" class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Custom Software for Your Industry</h2>
+                <p class="mt-4 text-xl text-gray-600">Each CallCare system is built specifically for your workflow and requirements.</p>
+            </div>
             
-            <!-- Lumpsum Investment Section -->
-            <div class="mb-16">
-                <h2 class="text-3xl font-semibold mb-8 text-gray-800">Lumpsum Investment</h2>
-                <div class="space-y-8">
-                    <div>
-                        <label for="lumpsumInvestment" class="block text-xl font-medium text-gray-700 mb-2">Lumpsum Investment</label>
-                        <input type="range" id="lumpsumInvestmentSlider" class="slider mb-3" min="100000" max="1000000" step="10000" value="500000">
-                        <input type="number" id="lumpsumInvestment" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" value="500000">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Healthcare & NGOs -->
+                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-blue-600 hover:shadow-xl transition-all duration-300">
+                    <div class="feature-icon bg-blue-100 text-blue-600 mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
                     </div>
-                    <div>
-                        <label for="expectedInterest" class="block text-xl font-medium text-gray-700 mb-2">Expected Interest (%)</label>
-                        <input type="range" id="expectedInterestSlider" class="slider mb-3" min="1" max="20" step="0.1" value="8">
-                        <input type="number" id="expectedInterest" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" value="8" step="0.1">
-                    </div>
-                    <div>
-                        <label for="targetValue" class="block text-xl font-medium text-gray-700 mb-2">Target Value</label>
-                        <input type="range" id="targetValueSlider" class="slider mb-3" min="200000" max="2000000" step="10000" value="720000">
-                        <input type="number" id="targetValue" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" value="720000">
-                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Healthcare & NGOs</h3>
+                    <p class="text-gray-600 mb-6">Patient appointment tracking, beneficiary follow-ups, community health programs. Built with healthcare compliance and audit requirements in mind.</p>
+                    <ul class="text-sm text-gray-500 space-y-2 mb-6">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Risk stratification & follow-up scheduling
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Call outcome tracking & reporting
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Multi-language support
+                        </li>
+                    </ul>
+                    <a href="#get-started" class="inline-flex items-center font-semibold text-blue-600 hover:text-blue-700">
+                        Get Healthcare Demo 
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
                 </div>
-                <div class="mt-8 p-6 result-box rounded-lg">
-                    <p class="text-2xl font-semibold text-gray-800">Years Required: <span id="yearsRequired" class="text-gray-900"></span></p>
-                    <p class="text-2xl font-semibold text-gray-800 mt-2">Compound Annual Growth Rate: <span id="cagr" class="text-gray-900"></span></p>
-                </div>
-            </div>
 
-            <!-- SIP Investment Section -->
-            <div class="mb-16">
-                <h2 class="text-3xl font-semibold mb-8 text-gray-800">SIP Investment</h2>
-                <div class="space-y-8">
-                    <div>
-                        <label for="sipInvestment" class="block text-xl font-medium text-gray-700 mb-2">SIP Investment Per Month</label>
-                        <input type="range" id="sipInvestmentSlider" class="slider mb-3" min="1000" max="100000" step="1000" value="10000">
-                        <input type="number" id="sipInvestment" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" value="10000">
+                <!-- Client Services -->
+                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-teal-600 hover:shadow-xl transition-all duration-300">
+                    <div class="feature-icon bg-teal-100 text-teal-600 mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
+                        </svg>
                     </div>
-                    <div>
-                        <label for="sipExpectedInterest" class="block text-xl font-medium text-gray-700 mb-2">Expected Interest (%)</label>
-                        <input type="range" id="sipExpectedInterestSlider" class="slider mb-3" min="1" max="20" step="0.1" value="8">
-                        <input type="number" id="sipExpectedInterest" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" value="8" step="0.1">
-                    </div>
-                    <div>
-                        <label for="sipTotalYears" class="block text-xl font-medium text-gray-700 mb-2">Total Years</label>
-                        <input type="range" id="sipTotalYearsSlider" class="slider mb-3" min="1" max="30" step="0.1" value="4.9">
-                        <input type="number" id="sipTotalYears" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" value="4.9" step="0.1">
-                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Client Services</h3>
+                    <p class="text-gray-600 mb-6">Perfect for agencies, consultants, and service businesses. Track client communication, project status, and follow-up requirements.</p>
+                    <ul class="text-sm text-gray-500 space-y-2 mb-6">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Client communication history
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Project milestone tracking
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Automated follow-up reminders
+                        </li>
+                    </ul>
+                    <a href="#get-started" class="inline-flex items-center font-semibold text-teal-600 hover:text-teal-700">
+                        Get Services Demo 
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
                 </div>
-                <div class="mt-8 p-6 result-box rounded-lg">
-                    <p class="text-2xl font-semibold text-gray-800">Final Value: <span id="sipFinalValue" class="text-gray-900"></span></p>
-                </div>
-            </div>
 
-            <!-- SIP to Reach Target Section -->
-            <div>
-                <h2 class="text-3xl font-semibold mb-8 text-gray-800">SIP to Reach Target</h2>
-                <div class="space-y-8">
-                    <div>
-                        <label for="targetSipInvestment" class="block text-xl font-medium text-gray-700 mb-2">SIP Investment Per Month</label>
-                        <input type="range" id="targetSipInvestmentSlider" class="slider mb-3" min="1000" max="100000" step="1000" value="10000">
-                        <input type="number" id="targetSipInvestment" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" value="10000">
+                <!-- Custom Workflow -->
+                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-gray-400 hover:shadow-xl transition-all duration-300">
+                    <div class="feature-icon bg-gray-100 text-gray-600 mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
                     </div>
-                    <div>
-                        <label for="targetSipExpectedInterest" class="block text-xl font-medium text-gray-700 mb-2">Expected Interest (%)</label>
-                        <input type="range" id="targetSipExpectedInterestSlider" class="slider mb-3" min="1" max="20" step="0.1" value="8">
-                        <input type="number" id="targetSipExpectedInterest" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" value="8" step="0.1">
-                    </div>
-                    <div>
-                        <label for="targetSipValue" class="block text-xl font-medium text-gray-700 mb-2">Target Value</label>
-                        <input type="range" id="targetSipValueSlider" class="slider mb-3" min="100000" max="10000000" step="10000" value="717020.59">
-                        <input type="number" id="targetSipValue" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" value="717020.59">
-                    </div>
-                </div>
-                <div class="mt-8 p-6 result-box rounded-lg">
-                    <p class="text-2xl font-semibold text-gray-800">Total Months SIP: <span id="totalMonthsSip" class="text-gray-900"></span></p>
-                    <p class="text-2xl font-semibold text-gray-800 mt-2">Years: <span id="totalYearsSip" class="text-gray-900"></span></p>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Your Custom Process</h3>
+                    <p class="text-gray-600 mb-6">Have a unique workflow? We build CallCare to match your exact requirements. Sales leads, project management, donor relations - anything.</p>
+                    <ul class="text-sm text-gray-500 space-y-2 mb-6">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Custom fields & workflows
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Tailored reporting & analytics
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Integration possibilities
+                        </li>
+                    </ul>
+                    <a href="#get-started" class="inline-flex items-center font-semibold text-gray-600 hover:text-gray-800">
+                        Discuss Your Needs 
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
- <script>
-        function updateSliderInput(sliderId, inputId) {
-            const slider = document.getElementById(sliderId);
-            const input = document.getElementById(inputId);
-            slider.addEventListener('input', () => {
-                input.value = slider.value;
-                calculateAll();
-            });
-            input.addEventListener('input', () => {
-                slider.value = input.value;
-                calculateAll();
-            });
-        }
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-16 md:py-24 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900">How CallCare Works</h2>
+          <p class="mt-4 text-xl text-gray-600">Professional software that uses your spreadsheet as its foundation.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">You Send Your Spreadsheet</h3>
+            <p class="text-gray-600">Share your current Google Sheet with us. We analyze your data structure and workflow requirements.</p>
+          </div>
+          
+          <div class="text-center">
+            <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">We Build Your Custom Software</h3>
+            <p class="text-gray-600">Custom interface designed for your exact workflow. Professional call management tools that connect to your sheet.</p>
+          </div>
+          
+          <div class="text-center">
+            <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Your Team Gets Professional Tools</h3>
+            <p class="text-gray-600">Staff use the intuitive interface. Managers keep their spreadsheet. Data stays under your complete control.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        function calculateLumpsum() {
-            const investment = parseFloat(document.getElementById('lumpsumInvestment').value);
-            const interest = parseFloat(document.getElementById('expectedInterest').value) / 100;
-            const target = parseFloat(document.getElementById('targetValue').value);
+    <!-- Pricing -->
+    <section id="pricing" class="py-16 md:py-24 bg-gray-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Simple, Transparent Pricing</h2>
+        <p class="text-xl text-gray-600 mb-12">One-time setup. No monthly fees. You own the system.</p>
+        
+        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 border-2 border-blue-600">
+          <div class="text-center mb-8">
+            <h3 class="text-2xl font-bold text-gray-900">Custom CallCare System</h3>
+            <div class="mt-4">
+              <span class="text-5xl font-extrabold text-blue-600">$2,500</span>
+              <span class="text-xl text-gray-600"> - $5,000</span>
+            </div>
+            <p class="mt-2 text-gray-600">One-time setup fee based on complexity</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-left">
+            <div>
+              <h4 class="font-semibold text-gray-900 mb-3">What's Included:</h4>
+              <ul class="space-y-2 text-gray-600">
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                  Custom interface for your workflow
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                  Google Sheets integration
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                  Staff training & documentation
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                  30 days of support & adjustments
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 class="font-semibold text-gray-900 mb-3">Optional Add-ons:</h4>
+              <ul class="space-y-2 text-gray-600">
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 1.414L10.586 9.5 9.707 8.621a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4a1 1 0 00-1.414-1.414L11 10.086l.707.707z" clip-rule="evenodd"></path>
+                  </svg>
+                  AI integration & automation
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 1.414L10.586 9.5 9.707 8.621a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4a1 1 0 00-1.414-1.414L11 10.086l.707.707z" clip-rule="evenodd"></path>
+                  </svg>
+                  Advanced reporting & analytics
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 1.414L10.586 9.5 9.707 8.621a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4a1 1 0 00-1.414-1.414L11 10.086l.707.707z" clip-rule="evenodd"></path>
+                  </svg>
+                  Third-party integrations
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 1.414L10.586 9.5 9.707 8.621a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4a1 1 0 00-1.414-1.414L11 10.086l.707.707z" clip-rule="evenodd"></path>
+                  </svg>
+                  Ongoing consultation & optimization
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="bg-gray-50 rounded-xl p-6 mb-8">
+            <div class="flex items-center justify-center gap-3 text-gray-600">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+              </svg>
+              <strong>No monthly fees. No subscriptions. You own the system forever.</strong>
+            </div>
+          </div>
+          
+          <a href="#get-started" class="btn btn-primary text-lg px-8 py-4 w-full md:w-auto">Get Your Custom Quote</a>
+        </div>
+      </div>
+    </section>
 
-            const years = Math.log(target / investment) / Math.log(1 + interest);
-            document.getElementById('yearsRequired').textContent = years.toFixed(2);
+    <!-- Get Started -->
+    <section id="get-started" class="py-16 md:py-24 bg-blue-600 text-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to See Your Data Transformed?</h2>
+        <p class="text-xl text-blue-100 mb-12">Send us your current spreadsheet and we'll show you what CallCare can do for your team.</p>
+        
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-8 md:p-12">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="text-left">
+              <h3 class="text-2xl font-bold mb-4">Here's what happens next:</h3>
+              <ul class="space-y-3 text-blue-100">
+                <li class="flex items-start gap-3">
+                  <div class="bg-white/20 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">1</div>
+                  <span>Email us your current Google Sheet or Excel file</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <div class="bg-white/20 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">2</div>
+                  <span>We build a custom CallCare demo with your actual data structure</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <div class="bg-white/20 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">3</div>
+                  <span>You get a personalized video walkthrough of your new system</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <div class="bg-white/20 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">4</div>
+                  <span>If you love it, we deliver the full system within 1-2 weeks</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="text-center">
+              <div class="bg-white rounded-xl p-6 text-gray-900">
+                <h4 class="text-xl font-bold mb-4">Get Your Free Demo</h4>
+                <p class="text-gray-600 mb-6">No commitment. Just see what's possible with your data.</p>
+                
+                <div class="space-y-4">
+                  <a href="mailto:demo@callcare.info?subject=CallCare Demo Request&body=Hi! I'd like to see a demo of CallCare with my data. I've attached my current spreadsheet. Please let me know the next steps." 
+                     class="btn btn-primary w-full text-center block">
+                    📧 Email Your Spreadsheet
+                  </a>
+                  <p class="text-sm text-gray-500">
+                    Or send to: <strong>demo@callcare.info</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-12 text-center">
+          <p class="text-blue-100 text-lg">
+            <strong>Questions?</strong> Email us at <a href="mailto:hello@callcare.info" class="underline hover:text-white">hello@callcare.info</a> or see our FAQ below.
+          </p>
+        </div>
+      </div>
+    </section>
 
-            const cagr = (Math.pow(target / investment, 1 / years) - 1) * 100;
-            document.getElementById('cagr').textContent = cagr.toFixed(2) + '%';
-        }
+    <!-- FAQ -->
+    <section class="py-16 md:py-24 bg-gray-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Frequently Asked Questions</h2>
+        </div>
+        
+        <div class="space-y-8">
+          <div class="bg-white p-6 rounded-xl shadow-sm">
+            <h3 class="text-lg font-bold text-gray-900 mb-3">Is this just a Google Sheets add-on?</h3>
+            <p class="text-gray-600">No. CallCare is custom software built specifically for your workflow. Your Google Sheet serves as the database, but your team gets a professional interface with features designed for call management, not spreadsheet editing.</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-xl shadow-sm">
+            <h3 class="text-lg font-bold text-gray-900 mb-3">What happens to my data?</h3>
+            <p class="text-gray-600">Your data stays in your Google Sheet, under your complete control. You can export it, back it up, or analyze it however you want. CallCare reads and writes to your sheet, but never stores your data on our servers.</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-xl shadow-sm">
+            <h3 class="text-lg font-bold text-gray-900 mb-3">How is this different from a CRM?</h3>
+            <p class="text-gray-600">Traditional CRMs lock your data in their system and force you to adapt to their workflow. CallCare is custom-built around your existing process and keeps your data in a format you already understand and control.</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-xl shadow-sm">
+            <h3 class="text-lg font-bold text-gray-900 mb-3">What if I need changes after delivery?</h3>
+            <p class="text-gray-600">We include 30 days of adjustments with every system. After that, we're available for ongoing consultation and system improvements on an hourly basis.</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-xl shadow-sm">
+            <h3 class="text-lg font-bold text-gray-900 mb-3">How secure is this?</h3>
+            <p class="text-gray-600">Security is based on Google's infrastructure and your domain access controls. Only users you authorize can access the system. No passwords to manage - access is controlled through your Google Workspace domain.</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-xl shadow-sm">
+            <h3 class="text-lg font-bold text-gray-900 mb-3">Can you integrate AI features?</h3>
+            <p class="text-gray-600">Absolutely. Once your basic system is working, we can add AI-powered features like call summaries, automated follow-up suggestions, risk scoring, and intelligent routing. This is where the real magic happens.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        function calculateSIP() {
-            const investment = parseFloat(document.getElementById('sipInvestment').value);
-            const interest = parseFloat(document.getElementById('sipExpectedInterest').value) / 100 / 12;
-            const years = parseFloat(document.getElementById('sipTotalYears').value);
-            const months = years * 12;
+  </main>
 
-            const finalValue = investment * ((Math.pow(1 + interest, months) - 1) / interest) * (1 + interest);
-            document.getElementById('sipFinalValue').textContent = finalValue.toFixed(2);
-        }
+  <footer class="bg-gray-900">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+          <div class="text-center text-gray-400 text-sm">
+              <p>&copy; <span id="year"></span> CallCare. Professional call management. Your data stays yours.</p>
+              <p class="mt-2">
+                  <a href="mailto:hello@callcare.info" class="hover:text-white transition-colors">hello@callcare.info</a> 
+                  | Built for teams who value data ownership and simplicity.
+              </p>
+          </div>
+      </div>
+  </footer>
 
-        function calculateTargetSIP() {
-            const investment = parseFloat(document.getElementById('targetSipInvestment').value);
-            const interest = parseFloat(document.getElementById('targetSipExpectedInterest').value) / 100 / 12;
-            const target = parseFloat(document.getElementById('targetSipValue').value);
-
-            let months = 0;
-            let currentValue = 0;
-            while (currentValue < target) {
-                currentValue = (currentValue + investment) * (1 + interest);
-                months++;
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
-
-            document.getElementById('totalMonthsSip').textContent = months.toFixed(2);
-            document.getElementById('totalYearsSip').textContent = (months / 12).toFixed(2);
-        }
-
-        function calculateAll() {
-            calculateLumpsum();
-            calculateSIP();
-            calculateTargetSIP();
-        }
-
-        // Initialize sliders and inputs
-        updateSliderInput('lumpsumInvestmentSlider', 'lumpsumInvestment');
-        updateSliderInput('expectedInterestSlider', 'expectedInterest');
-        updateSliderInput('targetValueSlider', 'targetValue');
-        updateSliderInput('sipInvestmentSlider', 'sipInvestment');
-        updateSliderInput('sipExpectedInterestSlider', 'sipExpectedInterest');
-        updateSliderInput('sipTotalYearsSlider', 'sipTotalYears');
-        updateSliderInput('targetSipInvestmentSlider', 'targetSipInvestment');
-        updateSliderInput('targetSipExpectedInterestSlider', 'targetSipExpectedInterest');
-        updateSliderInput('targetSipValueSlider', 'targetSipValue');
-
-        // Initial calculations
-        calculateAll();
-    </script>
+        });
+    });
+  </script>
 </body>
 </html>
