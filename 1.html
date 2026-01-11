@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CallCare — Patient Callback System for Community Health Teams</title>
+    <meta name="description" content="Stop losing patients to missed follow-ups. CallCare gives your CHWs a simple callback system that works with your existing Google Sheet. Built for community health programs.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        health: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        html { scroll-behavior: smooth; }
+        .gradient-text {
+            background: linear-gradient(135deg, #1e40af 0%, #15803d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233b82f6' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+            backdrop-filter: blur(10px);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-gray-900 antialiased">
+
+    <!-- Announcement Bar -->
+    <div class="bg-health-700 text-white text-center py-2.5 px-4 text-sm font-medium">
+        <span class="hidden sm:inline">🎯 Limited:</span> Free 2-week pilot for qualifying health programs 
+        <a href="#pilot" class="underline hover:no-underline ml-1 font-semibold">Apply now →</a>
+    </div>
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <nav class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2.5">
+                    <div class="w-10 h-10 bg-gradient-to-br from-brand-600 to-health-600 rounded-xl flex items-center justify-center shadow-lg shadow-brand-500/20">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-bold text-xl text-gray-900">CallCare</span>
+                        <span class="hidden sm:block text-xs text-gray-500 -mt-1">for Community Health</span>
+                    </div>
+                </a>
+
+                <!-- Nav Links (Desktop) -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#problem" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition">The Problem</a>
+                    <a href="#solution" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition">How It Works</a>
+                    <a href="#proof" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition">Results</a>
+                    <a href="#faq" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition">FAQ</a>
+                </div>
+
+                <!-- CTA -->
+                <a href="#pilot" class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg shadow-lg shadow-brand-500/25 transition-all hover:-translate-y-0.5">
+                    See Demo
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden hero-pattern">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-12 md:pt-20 pb-16 md:pb-24">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left: Copy -->
+                    <div class="text-center lg:text-left">
+                        <!-- Trust Badge -->
+                        <div class="inline-flex items-center gap-2 bg-health-50 border border-health-200 text-health-700 text-sm font-semibold px-4 py-2 rounded-full mb-6">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            Built for Community Health Programs
+                        </div>
+
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-[1.1] mb-6">
+                            Stop Losing Patients to 
+                            <span class="gradient-text">Missed Follow-Ups</span>
+                        </h1>
+
+                        <p class="text-lg sm:text-xl text-gray-600 leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0">
+                            Your CHWs deserve better than a messy spreadsheet. CallCare gives them a simple mobile dashboard to manage callbacks — while you keep full control of the data.
+                        </p>
+
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
+                            <a href="#pilot" class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-8 py-4 rounded-xl shadow-xl shadow-brand-500/30 transition-all hover:-translate-y-1 text-lg">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                    <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                                </svg>
+                                Watch 3-Min Demo
+                            </a>
+                            <a href="#solution" class="inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-semibold px-8 py-4 rounded-xl border-2 border-gray-200 hover:border-brand-300 transition-all text-lg">
+                                See How It Works
+                            </a>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-6 text-sm text-gray-500">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-5 h-5 text-health-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Works with Google Sheets</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <svg class="w-5 h-5 text-health-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Mobile-Friendly</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <svg class="w-5 h-5 text-health-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>HIPAA-Conscious Design</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: App Preview -->
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-brand-500/20 to-health-500/20 rounded-3xl blur-2xl"></div>
+                        <div class="relative bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden float-animation">
+                            <!-- Mock Browser Bar -->
+                            <div class="bg-gray-100 px-4 py-3 flex items-center gap-2 border-b">
+                                <div class="flex gap-1.5">
+                                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                                </div>
+                                <div class="flex-1 bg-white rounded-md px-3 py-1 text-xs text-gray-400 text-center">
+                                    callcare.app/dashboard
+                                </div>
+                            </div>
+                            <!-- App Interface Mock -->
+                            <div class="p-4 bg-gray-50">
+                                <!-- Header -->
+                                <div class="bg-white rounded-lg p-4 mb-3 shadow-sm">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div>
+                                            <h3 class="font-semibold text-gray-900">Today's Callbacks</h3>
+                                            <p class="text-sm text-gray-500">March 15, 2024</p>
+                                        </div>
+                                        <div class="bg-health-100 text-health-700 text-sm font-bold px-3 py-1 rounded-full">
+                                            12 remaining
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <div class="flex-1 bg-blue-50 rounded-lg p-3 text-center">
+                                            <div class="text-2xl font-bold text-blue-600">28</div>
+                                            <div class="text-xs text-blue-600">Completed</div>
+                                        </div>
+                                        <div class="flex-1 bg-yellow-50 rounded-lg p-3 text-center">
+                                            <div class="text-2xl font-bold text-yellow-600">12</div>
+                                            <div class="text-xs text-yellow-600">Pending</div>
+                                        </div>
+                                        <div class="flex-1 bg-red-50 rounded-lg p-3 text-center">
+                                            <div class="text-2xl font-bold text-red-600">3</div>
+                                            <div class="text-xs text-red-600">High Risk</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Patient Cards -->
+                                <div class="space-y-2">
+                                    <div class="bg-white rounded-lg p-3 shadow-sm border-l-4 border-red-500">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <div class="flex items-center gap-2">
+                                                    <span class="font-medium text-gray-900">Maria G.</span>
+                                                    <span class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full font-medium">High Risk</span>
+                                                </div>
+                                                <p class="text-sm text-gray-500">Diabetes follow-up • 3 days overdue</p>
+                                            </div>
+                                            <button class="bg-brand-600 text-white p-2 rounded-lg">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white rounded-lg p-3 shadow-sm border-l-4 border-yellow-500">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <div class="flex items-center gap-2">
+                                                    <span class="font-medium text-gray-900">James T.</span>
+                                                    <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-0.5 rounded-full font-medium">Due Today</span>
+                                                </div>
+                                                <p class="text-sm text-gray-500">Medication check-in</p>
+                                            </div>
+                                            <button class="bg-brand-600 text-white p-2 rounded-lg">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white rounded-lg p-3 shadow-sm border-l-4 border-green-500">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <div class="flex items-center gap-2">
+                                                    <span class="font-medium text-gray-900">Sarah K.</span>
+                                                    <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full font-medium">Stable</span>
+                                                </div>
+                                                <p class="text-sm text-gray-500">Monthly wellness check</p>
+                                            </div>
+                                            <button class="bg-brand-600 text-white p-2 rounded-lg">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wave Divider -->
+            <div class="absolute bottom-0 left-0 right-0">
+                <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 50L48 45.8C96 41.7 192 33.3 288 29.2C384 25 480 25 576 33.3C672 41.7 768 58.3 864 62.5C960 66.7 1056 58.3 1152 50C1248 41.7 1344 33.3 1392 29.2L1440 25V100H1392C1344 100 1248 100 1152 100C1056 100 960 100 864 100C768 100 672 100 576 100C480 100 384 100 288 100C192 100 96 100 48 100H0V50Z" fill="white"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Problem Section -->
+        <section id="problem" class="py-16 md:py-24 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-16">
+                    <span class="inline-block bg-red-100 text-red-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">The Problem</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Your spreadsheet is costing you patients</h2>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">Sound familiar?</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 mb-16">
+                    <!-- Problem 1 -->
+                    <div class="bg-red-50 border border-red-100 rounded-2xl p-6 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-red-100 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                        <div class="relative">
+                            <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">"Who was supposed to call them?"</h3>
+                            <p class="text-gray-600 text-sm">Multiple CHWs editing the same sheet. Rows get skipped. Patients fall through the cracks. Nobody knows who's responsible.</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem 2 -->
+                    <div class="bg-red-50 border border-red-100 rounded-2xl p-6 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-red-100 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                        <div class="relative">
+                            <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">"I need this report by Friday"</h3>
+                            <p class="text-gray-600 text-sm">Funders want outcome data. You spend hours manually counting calls, categorizing results, and building pivot tables.</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem 3 -->
+                    <div class="bg-red-50 border border-red-100 rounded-2xl p-6 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-red-100 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                        <div class="relative">
+                            <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">"I can't use this on my phone"</h3>
+                            <p class="text-gray-600 text-sm">CHWs in the field need mobile access. Google Sheets on mobile is painful. Data entry errors multiply.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consequences -->
+                <div class="bg-gray-900 rounded-2xl p-8 md:p-12 text-center">
+                    <h3 class="text-2xl font-bold text-white mb-6">The real cost?</h3>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div>
+                            <div class="text-4xl font-bold text-red-400 mb-2">23%</div>
+                            <p class="text-gray-400 text-sm">of patients miss critical follow-ups due to tracking failures</p>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-bold text-red-400 mb-2">8+ hrs</div>
+                            <p class="text-gray-400 text-sm">per week spent on manual reporting and data cleanup</p>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-bold text-red-400 mb-2">$$$</div>
+                            <p class="text-gray-400 text-sm">in grant compliance risk from poor documentation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solution Section -->
+        <section id="solution" class="py-16 md:py-24 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-16">
+                    <span class="inline-block bg-health-100 text-health-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">The Solution</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">A professional callback system.<br/>Your spreadsheet as the database.</h2>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">We build a custom interface on top of your existing Google Sheet. You keep control. Your team gets tools that actually work.</p>
+                </div>
+
+                <!-- Features Grid -->
+                <div class="grid md:grid-cols-2 gap-8 mb-16">
+                    <!-- Feature 1 -->
+                    <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Smart Worklists</h3>
+                                <p class="text-gray-600">CHWs see exactly who to call next. Prioritized by risk level, due date, and custom rules you define. No more hunting through rows.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-health-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-health-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Mobile-First Design</h3>
+                                <p class="text-gray-600">Big buttons. Simple forms. Works perfectly on any phone. Your CHWs in the field can log calls in seconds, not minutes.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Instant Reporting</h3>
+                                <p class="text-gray-600">One click to see calls completed, outcomes logged, and patients reached. Export funder-ready reports in seconds, not hours.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Your Data, Your Control</h3>
+                                <p class="text-gray-600">Everything stays in your Google Sheet. No vendor lock-in. No learning a new system for managers. Just better tools for your team.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How It Works Steps -->
+                <div class="bg-white rounded-2xl p-8 md:p-12 border border-gray-100">
+                    <h3 class="text-2xl font-bold text-gray-900 text-center mb-10">How we build it for you</h3>
+                    <div class="grid md:grid-cols-4 gap-8">
+                        <div class="text-center relative">
+                            <div class="w-12 h-12 bg-brand-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg mx-auto mb-4 shadow-lg shadow-brand-500/30">1</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Share Your Sheet</h4>
+                            <p class="text-sm text-gray-600">Send us your current Google Sheet. We analyze your columns and workflow.</p>
+                            <div class="hidden md:block absolute top-6 left-1/2 w-full h-0.5 bg-gray-200 -z-10"></div>
+                        </div>
+                        <div class="text-center relative">
+                            <div class="w-12 h-12 bg-gray-200 rounded-2xl flex items-center justify-center text-gray-600 font-bold text-lg mx-auto mb-4">2</div>
+                            <h4 class="font-bold text-gray-900 mb-2">We Build Your App</h4>
+                            <p class="text-sm text-gray-600">Custom interface designed for your exact patient callback process.</p>
+                            <div class="hidden md:block absolute top-6 left-1/2 w-full h-0.5 bg-gray-200 -z-10"></div>
+                        </div>
+                        <div class="text-center relative">
+                            <div class="w-12 h-12 bg-gray-200 rounded-2xl flex items-center justify-center text-gray-600 font-bold text-lg mx-auto mb-4">3</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Video Walkthrough</h4>
+                            <p class="text-sm text-gray-600">We send you a personalized Loom demo of your new system in action.</p>
+                            <div class="hidden md:block absolute top-6 left-1/2 w-full h-0.5 bg-gray-200 -z-10"></div>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-health-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg mx-auto mb-4 shadow-lg shadow-health-500/30">4</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Go Live</h4>
+                            <p class="text-sm text-gray-600">Your team logs in and starts working. We provide 30 days of support.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Proof / Results -->
+        <section id="proof" class="py-16 md:py-24 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-16">
+                    <span class="inline-block bg-brand-100 text-brand-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">Results</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">What happens when CHWs get real tools</h2>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid md:grid-cols-3 gap-8 mb-16">
+                    <div class="stat-card rounded-2xl p-8 text-center border border-gray-100 shadow-lg">
+                        <div class="text-5xl font-extrabold text-brand-600 mb-2">40%</div>
+                        <p class="text-gray-600 font-medium">More patients contacted<br/>per week</p>
+                    </div>
+                    <div class="stat-card rounded-2xl p-8 text-center border border-gray-100 shadow-lg">
+                        <div class="text-5xl font-extrabold text-health-600 mb-2">6 hrs</div>
+                        <p class="text-gray-600 font-medium">Saved on reporting<br/>every week</p>
+                    </div>
+                    <div class="stat-card rounded-2xl p-8 text-center border border-gray-100 shadow-lg">
+                        <div class="text-5xl font-extrabold text-purple-600 mb-2">Zero</div>
+                        <p class="text-gray-600 font-medium">Missed high-risk<br/>follow-ups</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial -->
+                <div class="bg-gradient-to-br from-brand-600 to-brand-800 rounded-2xl p-8 md:p-12 text-white relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="relative max-w-3xl mx-auto text-center">
+                        <svg class="w-12 h-12 text-brand-300 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                        </svg>
+                        <blockquote class="text-xl md:text-2xl font-medium leading-relaxed mb-6">
+                            "We went from chaos to clarity overnight. My CHWs actually <em>like</em> logging calls now because it takes 10 seconds instead of hunting for the right row. And I can pull a funder report in one click."
+                        </blockquote>
+                        <div class="flex items-center justify-center gap-4">
+                            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center font-bold text-lg">PM</div>
+                            <div class="text-left">
+                                <div class="font-semibold">Program Manager</div>
+                                <div class="text-brand-200 text-sm">Community Health Initiative</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pilot CTA Section -->
+        <section id="pilot" class="py-16 md:py-24 bg-gray-900 relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0di00aC0ydjRoLTR2Mmg0djRoMnYtNGg0di0yaC00em0wLTMwVjBoLTJ2NGgtNHYyaDR2NGgyVjZoNFY0aC00ek02IDM0di00SDR2NEgwdjJoNHY0aDJ2LTRoNHYtMkg2ek02IDRWMEI0djRIMHYyaDR2NGgyVjZoNFY0SDZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-50"></div>
+            
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 relative">
+                <div class="text-center mb-12">
+                    <span class="inline-block bg-health-500 text-white text-sm font-semibold px-4 py-1.5 rounded-full mb-4">Limited Availability</span>
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Try CallCare free for 2 weeks</h2>
+                    <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                        We're offering a free pilot to qualifying community health programs. No payment info. No commitment. Just see if it works for your team.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                    <div class="grid md:grid-cols-2">
+                        <!-- Left: What You Get -->
+                        <div class="p-8 md:p-10 bg-gray-50">
+                            <h3 class="text-xl font-bold text-gray-900 mb-6">Your free pilot includes:</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-6 h-6 text-health-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="text-gray-700"><strong>Custom interface</strong> built from your actual spreadsheet</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-6 h-6 text-health-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="text-gray-700"><strong>Up to 5 users</strong> for full team testing</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-6 h-6 text-health-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="text-gray-700"><strong>Personalized demo video</strong> walking through your system</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-6 h-6 text-health-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="text-gray-700"><strong>Direct Slack/email support</strong> during the pilot</span>
+                                </li>
+                            </ul>
+
+                            <div class="mt-8 p-4 bg-brand-50 rounded-xl border border-brand-100">
+                                <p class="text-sm text-brand-800">
+                                    <strong>Who qualifies?</strong> We prioritize community health programs serving underserved populations. Limited to 3 new pilots per month.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Right: Contact Form -->
+                        <div class="p-8 md:p-10">
+                            <h3 class="text-xl font-bold text-gray-900 mb-6">Request your free pilot</h3>
+                            <form action="#" method="POST" class="space-y-4">
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                                    <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition" placeholder="Patricia Johnson">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Work Email</label>
+                                    <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition" placeholder="patricia@healthorg.org">
+                                </div>
+                                <div>
+                                    <label for="org" class="block text-sm font-medium text-gray-700 mb-1">Organization</label>
+                                    <input type="text" id="org" name="org" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition" placeholder="Community Health Initiative">
+                                </div>
+                                <div>
+                                    <label for="team" class="block text-sm font-medium text-gray-700 mb-1">Team Size (CHWs)</label>
+                                    <select id="team" name="team" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition bg-white">
+                                        <option>1-5 CHWs</option>
+                                        <option>6-15 CHWs</option>
+                                        <option>16-30 CHWs</option>
+                                        <option>30+ CHWs</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-4 rounded-lg shadow-lg shadow-brand-500/30 transition-all hover:-translate-y-0.5">
+                                    Apply for Free Pilot →
+                                </button>
+                                <p class="text-xs text-gray-500 text-center">
+                                    We'll respond within 24 hours with next steps.
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-16 md:py-24 bg-white">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900">Common Questions</h2>
+                </div>
+
+                <div class="space-y-6">
+                    <details class="group bg-gray-50 rounded-xl">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                            <span class="font-semibold text-gray-900">Is this a Google Sheets template or add-on?</span>
+                            <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-600">
+                            <p>No. CallCare is a <strong>standalone web application</strong> that your team logs into. It connects to your Google Sheet as its database, but your CHWs use a professional, mobile-friendly interface—not the spreadsheet itself. Your managers can still access the raw sheet anytime.</p>
+                        </div>
+                    </details>
+
+                    <details class="group bg-gray-50 rounded-xl">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                            <span class="font-semibold text-gray-900">Is patient data secure?</span>
+                            <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-600">
+                            <p>Yes. Data stays in <strong>your</strong> Google Workspace, protected by Google's enterprise security. Access is controlled via Google authentication—only users you authorize can see patient data. We never store PHI on our servers.</p>
+                        </div>
+                    </details>
+
+                    <details class="group bg-gray-50 rounded-xl">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                            <span class="font-semibold text-gray-900">What does it cost after the pilot?</span>
+                            <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-600">
+                            <p>We offer two models: a <strong>one-time setup fee</strong> (you own the system forever) or a <strong>low monthly subscription</strong> with ongoing support. Pricing depends on team size and customization needs. We'll discuss options at the end of your pilot.</p>
+                        </div>
+                    </details>
+
+                    <details class="group bg-gray-50 rounded-xl">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                            <span class="font-semibold text-gray-900">How long does setup take?</span>
+                            <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-600">
+                            <p>For a standard pilot, we can have your custom system ready in <strong>3-5 business days</strong>. Complex integrations or large datasets may take up to 2 weeks. You'll receive a video walkthrough before your team starts using it.</p>
+                        </div>
+                    </details>
+
+                    <details class="group bg-gray-50 rounded-xl">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                            <span class="font-semibold text-gray-900">Can you add AI features like call summaries?</span>
+                            <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-600">
+                            <p>Yes. Once your core system is working, we can integrate AI-powered features like automatic call note summaries, risk scoring based on conversation content, and smart follow-up recommendations. Ask us during your pilot consultation.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-brand-500 to-health-500 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                    </div>
+                    <span class="text-white font-semibold">CallCare</span>
+                </div>
+                
+                <div class="text-sm text-center md:text-left">
+                    Questions? Email us at <a href="mailto:hello@callcare.app" class="text-white hover:underline">hello@callcare.app</a>
+                </div>
+
+                <div class="text-sm">
+                    © <span id="year"></span> CallCare. Built for community health.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
