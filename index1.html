@@ -1,0 +1,446 @@
+Here is the revised code. I have applied the following "Expert Hat" changes to improve conversion, clarity, and professionalism while removing the specific pricing:
+
+1.  **UX & Strategy Hat:** I replaced the "Pricing" section with a **"Comparison" section (SaaS vs. Custom)**. Since we aren't competing on a visible price tag anymore, we must compete on *value*. Showing a direct comparison of "Monthly Fees + Data Lock-in" (Competitors) vs. "One-Time Build + Data Ownership" (You) is a powerful psychological trigger.
+2.  **Copywriting Hat:** I tightened the headlines to focus on the *pain point* (messy spreadsheets) and the *gain* (professional software). I removed the passive "Email us" language and replaced it with stronger "Request a Prototype" calls to action.
+3.  **Technical Hat:** I removed the Cloudflare email obfuscation scripts (the garbled text in the `mailto` links) and replaced them with clean, functional placeholders. Those scripts often break in local testing or preview environments.
+4.  **Design Hat:** I adjusted the spacing in the "Solutions" section to make it more readable and added a visual distinction to the new Comparison section.
+
+Here is the updated, expert-optimized code:
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="CallCare is custom software built for your team's workflow. Keep your data in Google Sheets where you control it, while your staff gets professional call management tools." />
+  <title>CallCare — Custom Call Management Software That Uses Your Google Sheet</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    html { scroll-behavior: smooth; }
+    .hero-gradient-text {
+      background: linear-gradient(45deg, #2563eb, #0d9488);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .btn { 
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .btn-primary { 
+      background-color: #2563eb;
+      color: white;
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+    }
+    .btn-primary:hover { background-color: #1d4ed8; }
+    .btn-secondary { 
+      background-color: white;
+      border: 2px solid #e5e7eb;
+      color: #1f2937;
+    }
+    .btn-secondary:hover { 
+      border-color: #2563eb;
+      color: #2563eb;
+    }
+    .feature-icon { 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 3rem;
+      width: 3rem;
+      border-radius: 0.75rem;
+    }
+    .check-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .check-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #10b981;
+      font-weight: bold;
+    }
+    .x-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .x-list li::before {
+      content: '✕';
+      position: absolute;
+      left: 0;
+      color: #ef4444;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- Header -->
+  <header class="fixed top-0 w-full bg-white/95 backdrop-blur z-50 border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-20">
+        <a href="#" class="font-bold text-2xl flex items-center gap-2 text-gray-900 tracking-tight">
+          <div class="bg-blue-600 text-white p-1.5 rounded-lg">
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25c0-1.372-.465-2.637-1.244-3.626.28-.598.428-1.261.428-1.957 0-2.664-2.336-4.917-5.25-4.917-1.372 0-2.637.465-3.626 1.244a7.5 7.5 0 00-1.957-.428C7.336 9.75 5.25 12.086 5.25 15c0 .696.148 1.359.428 1.957C4.465 17.613 4 18.878 4 20.25A2.25 2.25 0 006.25 22.5h2.25c8.284 0 15-6.716 15-15V6.75A2.25 2.25 0 0021.25 4.5h-19A2.25 2.25 0 000 6.75z" />
+            </svg>
+          </div>
+          CallCare
+        </a>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+          <a href="#benefits" class="hover:text-blue-600 transition-colors">Benefits</a>
+          <a href="#solutions" class="hover:text-blue-600 transition-colors">Use Cases</a>
+          <a href="#comparison" class="hover:text-blue-600 transition-colors">Why Custom?</a>
+          <a href="#faq" class="hover:text-blue-600 transition-colors">FAQ</a>
+        </nav>
+        <a href="#contact" class="btn btn-primary shadow-lg shadow-blue-500/30">Request Prototype</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 md:pt-40 md:pb-32 bg-gradient-to-br from-slate-50 via-white to-blue-50/50 overflow-hidden">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center relative">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 bg-white text-blue-700 text-sm font-semibold px-4 py-2 rounded-full border border-blue-100 shadow-sm mb-8 animate-fade-in-up">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+          </span>
+          Custom Software Built for Your Exact Workflow
+        </div>
+        
+        <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6">
+          Enterprise Power. <br class="hidden md:block" />
+          <span class="hero-gradient-text">Spreadsheet Simplicity.</span>
+        </h1>
+        
+        <p class="max-w-2xl mx-auto text-lg md:text-xl text-gray-600 leading-relaxed mb-10">
+          Stop forcing your team to use rigid CRM software. We build a <strong>custom interface</strong> that sits on top of your Google Sheet. You get the control; they get the professional tools.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+          <a href="#contact" class="btn btn-primary text-lg px-8 py-4">Build My Custom Interface</a>
+          <a href="#how-it-works" class="btn btn-secondary text-lg px-8 py-4">See How It Works</a>
+        </div>
+
+        <!-- UI Mockup / Visual Anchor -->
+        <div class="relative max-w-5xl mx-auto">
+          <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 to-teal-400 rounded-2xl blur opacity-20"></div>
+          <img src="https://i.imgur.com/8QexgQB.png" alt="CallCare professional interface dashboard mockup" class="relative rounded-xl shadow-2xl border border-gray-200 bg-white">
+        </div>
+
+        <!-- Social Proof / Trust Bar -->
+        <div class="mt-12 pt-8 border-t border-gray-200/60">
+          <p class="text-sm font-semibold text-gray-500 mb-4 uppercase tracking-wider">Perfect for teams managing</p>
+          <div class="flex flex-wrap justify-center gap-8 md:gap-16 text-gray-400 font-medium">
+            <span class="flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> Patient Data</span>
+            <span class="flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> Sales Leads</span>
+            <span class="flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg> Donor Relations</span>
+            <span class="flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg> Field Operations</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Benefits (Why CallCare) -->
+    <section id="benefits" class="py-24 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-16 max-w-3xl mx-auto">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Stop fighting your software</h2>
+          <p class="mt-4 text-xl text-gray-600">Most platforms force you to change your business to fit their tool. We build the tool to fit your business.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <!-- Benefit 1 -->
+          <div class="group p-8 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100">
+            <div class="feature-icon bg-green-100 text-green-600 mb-6 group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">100% Data Ownership</h3>
+            <p class="text-gray-600 leading-relaxed">Your data never leaves your Google Sheet. No "Export" buttons required—you already have the raw data. No vendor lock-in, ever.</p>
+          </div>
+          
+          <!-- Benefit 2 -->
+          <div class="group p-8 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100">
+            <div class="feature-icon bg-blue-100 text-blue-600 mb-6 group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Zero Learning Curve</h3>
+            <p class="text-gray-600 leading-relaxed">Your managers keep working in the spreadsheet they love. Your staff gets a clean, simple app that prevents errors. Best of both worlds.</p>
+          </div>
+          
+          <!-- Benefit 3 -->
+          <div class="group p-8 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100">
+            <div class="feature-icon bg-purple-100 text-purple-600 mb-6 group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Fully Custom Logic</h3>
+            <p class="text-gray-600 leading-relaxed">Need a specific risk score calculated? Need a complex routing rule? We code your exact business logic into the system.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Section (Replaces Pricing) -->
+    <section id="comparison" class="py-24 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Why Custom vs. SaaS?</h2>
+                <p class="mt-4 text-xl text-gray-600">Why rent software that doesn't fit when you can own software that does?</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Competitors -->
+                <div class="bg-white p-8 rounded-2xl border border-gray-200 opacity-80">
+                    <h3 class="text-xl font-bold text-gray-500 mb-6">Standard CRM / SaaS</h3>
+                    <ul class="space-y-4 text-gray-600 x-list">
+                        <li><strong>Monthly fees</strong> per user forever</li>
+                        <li>Data locked inside their proprietary database</li>
+                        <li>Overloaded with 500 features you don't use</li>
+                        <li>Staff requires weeks of training</li>
+                        <li>You adapt your process to the software</li>
+                    </ul>
+                </div>
+
+                <!-- CallCare -->
+                <div class="bg-white p-8 rounded-2xl shadow-xl border-2 border-blue-600 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">RECOMMENDED</div>
+                    <h3 class="text-2xl font-bold text-blue-600 mb-6">CallCare Custom Build</h3>
+                    <ul class="space-y-4 text-gray-800 check-list">
+                        <li><strong>One-time development fee</strong> (No per-user subscriptions)</li>
+                        <li>Data lives in <strong>your</strong> Google Sheet</li>
+                        <li>Built with <strong>only</strong> the features you need</li>
+                        <li>Staff masters it in <strong>15 minutes</strong></li>
+                        <li>Software adapted to <strong>your</strong> process</li>
+                    </ul>
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                         <a href="#contact" class="block w-full text-center py-3 px-4 rounded-lg bg-blue-50 text-blue-700 font-bold hover:bg-blue-100 transition-colors">
+                            Get a Custom Quote
+                         </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solutions" class="py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Industries We Serve</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Healthcare -->
+                <div class="bg-slate-50 p-8 rounded-xl border hover:border-blue-300 transition-all duration-300">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Healthcare & NGOs</h3>
+                    <p class="text-gray-600 mb-4 text-sm">Patient appointment tracking, beneficiary follow-ups, and risk stratification.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-white border rounded text-xs text-gray-500">Audit Trails</span>
+                        <span class="px-2 py-1 bg-white border rounded text-xs text-gray-500">Risk Scoring</span>
+                    </div>
+                </div>
+
+                <!-- Client Services -->
+                <div class="bg-slate-50 p-8 rounded-xl border hover:border-teal-300 transition-all duration-300">
+                    <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Agencies & Services</h3>
+                    <p class="text-gray-600 mb-4 text-sm">Track client communication, project milestones, and automated follow-up reminders.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-white border rounded text-xs text-gray-500">Reminders</span>
+                        <span class="px-2 py-1 bg-white border rounded text-xs text-gray-500">History Logs</span>
+                    </div>
+                </div>
+
+                <!-- Sales -->
+                <div class="bg-slate-50 p-8 rounded-xl border hover:border-gray-400 transition-all duration-300">
+                    <div class="w-12 h-12 bg-gray-200 text-gray-700 rounded-lg flex items-center justify-center mb-6">
+                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Lead Management</h3>
+                    <p class="text-gray-600 mb-4 text-sm">High-velocity dialing, outcome tracking, and immediate lead distribution via sheets.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-white border rounded text-xs text-gray-500">Speed Dial</span>
+                        <span class="px-2 py-1 bg-white border rounded text-xs text-gray-500">Analytics</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works (Process) -->
+    <section id="how-it-works" class="py-24 bg-gray-900 text-white relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 left-0 w-64 h-64 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-teal-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 translate-x-1/2 translate-y-1/2"></div>
+
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold">The "No-Headache" Setup Process</h2>
+          <p class="mt-4 text-xl text-gray-400">We handle the technical heavy lifting. You just keep using your spreadsheet.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div class="text-center relative">
+            <div class="bg-blue-600 text-white rounded-2xl w-14 h-14 flex items-center justify-center text-xl font-bold mx-auto mb-6 shadow-lg shadow-blue-500/30">1</div>
+            <h3 class="text-lg font-bold mb-2">Send Spreadsheet</h3>
+            <p class="text-gray-400 text-sm">Share your current Google Sheet. We analyze your data structure.</p>
+            <div class="hidden md:block absolute top-7 left-1/2 w-full h-0.5 bg-gray-700 -z-10 transform translate-x-1/2"></div>
+          </div>
+          
+          <div class="text-center relative">
+            <div class="bg-gray-800 border border-gray-700 text-white rounded-2xl w-14 h-14 flex items-center justify-center text-xl font-bold mx-auto mb-6">2</div>
+            <h3 class="text-lg font-bold mb-2">We Build It</h3>
+            <p class="text-gray-400 text-sm">We configure the interface to match your specific workflow.</p>
+            <div class="hidden md:block absolute top-7 left-1/2 w-full h-0.5 bg-gray-700 -z-10 transform translate-x-1/2"></div>
+          </div>
+          
+          <div class="text-center relative">
+            <div class="bg-gray-800 border border-gray-700 text-white rounded-2xl w-14 h-14 flex items-center justify-center text-xl font-bold mx-auto mb-6">3</div>
+            <h3 class="text-lg font-bold mb-2">Video Review</h3>
+            <p class="text-gray-400 text-sm">We send you a Loom video walking through your new system.</p>
+            <div class="hidden md:block absolute top-7 left-1/2 w-full h-0.5 bg-gray-700 -z-10 transform translate-x-1/2"></div>
+          </div>
+
+          <div class="text-center">
+            <div class="bg-green-600 text-white rounded-2xl w-14 h-14 flex items-center justify-center text-xl font-bold mx-auto mb-6 shadow-lg shadow-green-500/30">4</div>
+            <h3 class="text-lg font-bold mb-2">Go Live</h3>
+            <p class="text-gray-400 text-sm">Your team gets access. We provide 30 days of tweaks and support.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-24 bg-white">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Common Questions</h2>
+        
+        <div class="space-y-6">
+          <div class="border-b border-gray-100 pb-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Is this just a Google Sheets template?</h3>
+            <p class="text-gray-600">No. It is a standalone, professional web application. Your team logs into a proper interface (like a CRM) to make calls and enter data. However, the <em>database</em> behind the app is your Google Sheet.</p>
+          </div>
+          
+          <div class="border-b border-gray-100 pb-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">How much does it cost?</h3>
+            <p class="text-gray-600">We charge a one-time development fee based on the complexity of your workflow. This is typically much cheaper than paying monthly SaaS fees for years. Contact us for a quote based on your specific needs.</p>
+          </div>
+          
+          <div class="border-b border-gray-100 pb-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Is my data secure?</h3>
+            <p class="text-gray-600">Yes. We utilize Google's secure infrastructure. Access is controlled via Google Authentication, meaning only people you explicitly share the system with can access it.</p>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Can you add AI features?</h3>
+            <p class="text-gray-600">Absolutely. We specialize in integrating AI for call summaries, sentiment analysis, and automated email follow-ups.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / CTA -->
+    <section id="contact" class="py-24 bg-blue-600 text-white relative">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Ready to modernize your workflow?</h2>
+        <p class="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">Send us your spreadsheet or describe your process. We'll build a prototype to show you what's possible.</p>
+        
+        <div class="bg-white rounded-2xl p-8 md:p-12 shadow-2xl mx-auto max-w-3xl">
+          <div class="flex flex-col md:flex-row gap-8 items-center justify-center">
+             <div class="flex-1 text-left">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Get a Free Consultation</h3>
+                <p class="text-gray-600 mb-4">No commitment. Let's just see if we can save your team 10+ hours a week.</p>
+                <div class="flex gap-2 mb-4">
+                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">15 Minute Call</span>
+                    <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold">Free Strategy</span>
+                </div>
+             </div>
+             <div class="flex-1 w-full">
+                <a href="mailto:hello@callcare.app?subject=I'm%20interested%20in%20a%20CallCare%20demo" class="btn btn-primary w-full text-lg py-4 mb-3">
+                  Email Your Requirements
+                </a>
+                <p class="text-sm text-gray-500">
+                  or email <strong>hello@callcare.app</strong>
+                </p>
+             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-gray-50 border-t border-gray-200">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+          <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+              <div class="flex items-center gap-2">
+                 <div class="bg-blue-600 text-white p-1 rounded">
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25c0-1.372-.465-2.637-1.244-3.626.28-.598.428-1.261.428-1.957 0-2.664-2.336-4.917-5.25-4.917-1.372 0-2.637.465-3.626 1.244a7.5 7.5 0 00-1.957-.428C7.336 9.75 5.25 12.086 5.25 15c0 .696.148 1.359.428 1.957C4.465 17.613 4 18.878 4 20.25A2.25 2.25 0 006.25 22.5h2.25c8.284 0 15-6.716 15-15V6.75A2.25 2.25 0 0021.25 4.5h-19A2.25 2.25 0 000 6.75z" />
+                    </svg>
+                  </div>
+                  <span class="font-bold text-gray-900">CallCare</span>
+              </div>
+              <div class="text-gray-500 text-sm">
+                  &copy; <span id="year"></span> CallCare Solutions. All rights reserved.
+              </div>
+          </div>
+      </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+  </script>
+</body>
+</html>
+```
